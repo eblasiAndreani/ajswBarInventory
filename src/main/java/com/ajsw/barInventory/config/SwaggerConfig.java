@@ -12,25 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @Configuration
-@Hidden
 public class SwaggerConfig {
-
-
-    @GetMapping("/")
-    public ResponseEntity<Void> redirectSwagger(HttpServletRequest request, HttpServletResponse response){
-        String url = "swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config";
-        response.setHeader("Location", url);
-        response.setStatus(302);
-        return null;
-    }
-
-
     @Bean
     public OpenAPI customAPI(){
-        return new OpenAPI().info(new Info().title("TSHARE").version("1.0.0")
-                .license(new License().name("Lincença do Sistema").url("www.techdevbrazil.com"))
+        return new OpenAPI().info(new Info().title("Bar-Inventory").version("1.0.0")
+                .license(new License().name("Lincencia de Sistemas").url("www.bar.com"))
         );
     }
 }
+

@@ -4,9 +4,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 @Data
-public class DrinkDto {
+public class RequestDrinkPostDto {
     private String name;
     private String description;
     private String image;
-    private BigDecimal price;
+    private double price;
 }
