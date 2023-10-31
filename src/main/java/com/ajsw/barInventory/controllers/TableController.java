@@ -1,68 +1,90 @@
 package com.ajsw.barInventory.controllers;
 
-import com.ajsw.barInventory.domain.dto.RequestTablePostDto;
+import com.ajsw.barInventory.domain.dto.Errors;
+import com.ajsw.barInventory.domain.dto.table.RequestTablePostDto;
+import com.ajsw.barInventory.domain.dto.table.ResponseTableDto;
+import com.ajsw.barInventory.domain.dto.table.ResponseTablesDto;
+import com.ajsw.barInventory.domain.dto.table.Table;
 import com.ajsw.barInventory.domain.entity.TableeEntity;
 import com.ajsw.barInventory.service.ITableService;
+import com.ajsw.barInventory.service.impl.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/table")
 public class TableController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableController.class);
     @Autowired
     private ITableService _tableService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<TableeEntity>> getAllPayment(){
+    public ResponseEntity<ResponseTablesDto> getAllPayment(){
+
+        ResponseTablesDto tablesDto = new ResponseTablesDto();
 
         try {
 
-            List<TableeEntity> tables = _tableService.getAll();
-            return ResponseEntity.ok(tables);
+            List<Table> tables = _tableService.getAll();
+            tablesDto.setBody(tables);
 
-        }catch (Exception ex){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.ok(tablesDto);
+
+        }catch (Exception ex) {
+            LOGGER.error(ex.getMessage());
+            tablesDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(tablesDto);
         }
 
     }
-    @GetMapping("/getById")
-    public ResponseEntity<TableeEntity> getById(int id){
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<ResponseTableDto> getById(@PathVariable Integer id){
+
+        ResponseTableDto responseTableDto = new ResponseTableDto();
 
         try{
 
-            TableeEntity tablee = _tableService.getById(id);
-            if (tablee != null){
-                return ResponseEntity.ok(tablee);
+            Table table = _tableService.getById(id);
+            if (table != null){
+                responseTableDto.setBody(table);
+                return ResponseEntity.ok(responseTableDto);
             }else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                responseTableDto.setErrors(new Errors(204, "No se encontró table",null));
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
             }
 
         }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            responseTableDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseTableDto);
         }
 
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TableeEntity> postTAble(@RequestBody RequestTablePostDto dates){
+    public ResponseEntity<ResponseTableDto> postTAble(@RequestBody RequestTablePostDto dates){
+
+        ResponseTableDto responseTableDto = new ResponseTableDto();
 
         try{
 
-            TableeEntity newTable = _tableService.createTable(dates);
+            Table newTable = _tableService.createTable(dates);
+            responseTableDto.setBody(newTable);
 
-            if (newTable !=null){
-                return ResponseEntity.status(HttpStatus.CREATED).body(newTable);
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseTableDto);
+
 
         }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            responseTableDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseTableDto);
         }
 
     }

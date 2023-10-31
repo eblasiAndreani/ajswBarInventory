@@ -1,67 +1,81 @@
 package com.ajsw.barInventory.controllers;
 
-import com.ajsw.barInventory.domain.dto.RequestOrderPostDto;
+import com.ajsw.barInventory.domain.dto.Errors;
+import com.ajsw.barInventory.domain.dto.order.Order;
+import com.ajsw.barInventory.domain.dto.order.RequestOrderPostDto;
+import com.ajsw.barInventory.domain.dto.order.ResponseOrderDto;
+import com.ajsw.barInventory.domain.dto.order.ResponseOrdersDto;
 import com.ajsw.barInventory.domain.entity.OrderrEntity;
 import com.ajsw.barInventory.service.IOrderService;
+import com.ajsw.barInventory.service.impl.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 @RestController
 @RequestMapping("/v1/order")
 public class OrderController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
     @Autowired
     private IOrderService _orderService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<OrderrEntity>> getAllPayment(){
-
+    public ResponseEntity<ResponseOrdersDto> getAllPayment(){
+        ResponseOrdersDto ordersDto = new ResponseOrdersDto();
         try {
 
-            List<OrderrEntity> orders = _orderService.getAll();
-            return ResponseEntity.ok(orders);
+            List<Order> orders = _orderService.getAll();
+            ordersDto.setBody(orders);
+            return ResponseEntity.ok(ordersDto);
 
         }catch (Exception ex){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            ordersDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ordersDto);
         }
 
     }
-    @GetMapping("/getById")
-    public ResponseEntity<OrderrEntity> getById(int id){
-
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<ResponseOrderDto> getById(@PathVariable Integer id){
+        ResponseOrderDto orderDto = new ResponseOrderDto();
         try{
 
-            OrderrEntity order =_orderService.getById(id);
+            Order order =_orderService.getById(id);
             if (order != null){
-                return ResponseEntity.ok(order);
+                orderDto.setBody(order);
+                return ResponseEntity.ok(orderDto);
             }else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                orderDto.setErrors(new Errors(204, "No se encontró Order",null));
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(orderDto);
             }
 
         }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            orderDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(orderDto);
         }
 
     }
 
     @PostMapping("/create")
-    public ResponseEntity<OrderrEntity> postDrink(@RequestBody RequestOrderPostDto dates){
-
+    public ResponseEntity<ResponseOrderDto> postDrink(@RequestBody RequestOrderPostDto dates){
+        ResponseOrderDto orderDto = new ResponseOrderDto();
         try{
 
-            OrderrEntity newOrder = _orderService.createOrder(dates);
+            Order newOrder = _orderService.createOrder(dates);
+            orderDto.setBody(newOrder);
 
-            if (newOrder !=null){
-                return ResponseEntity.status(HttpStatus.CREATED).body(newOrder);
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderDto);
 
         }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            orderDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(orderDto);
         }
 
     }

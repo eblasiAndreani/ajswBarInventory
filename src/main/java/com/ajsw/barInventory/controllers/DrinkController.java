@@ -1,66 +1,85 @@
 package com.ajsw.barInventory.controllers;
 
-import com.ajsw.barInventory.domain.dto.RequestDrinkPostDto;
-import com.ajsw.barInventory.domain.entity.DrinkEntity;
+import com.ajsw.barInventory.domain.dto.Errors;
+import com.ajsw.barInventory.domain.dto.drink.Drink;
+import com.ajsw.barInventory.domain.dto.drink.RequestDrinkPostDto;
+import com.ajsw.barInventory.domain.dto.drink.ResponseDrinkDto;
+import com.ajsw.barInventory.domain.dto.drink.ResponseDrinksDto;
 import com.ajsw.barInventory.service.IDrinkService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/drinks")
 public class DrinkController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DrinkController.class);
     @Autowired
     private IDrinkService _drinkService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<DrinkEntity>> getAllPayment(){
-
+    public ResponseEntity<ResponseDrinksDto> getAllPayment(){
+        ResponseDrinksDto drinksDto = new ResponseDrinksDto();
         try {
 
-            List<DrinkEntity> drinks = _drinkService.getAll();
-            return ResponseEntity.ok(drinks);
+            List<Drink> drinks = _drinkService.getAll();
+            drinksDto.setBody(drinks);
+
+            return ResponseEntity.ok(drinksDto);
 
         }catch (Exception ex){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            drinksDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(drinksDto);
         }
 
     }
-    @GetMapping("/getById")
-    public ResponseEntity<DrinkEntity> getById(Integer id){
 
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<ResponseDrinkDto> getById(@PathVariable Integer id){
+        ResponseDrinkDto drinkDto = new ResponseDrinkDto();
         try{
 
-            DrinkEntity drink =_drinkService.getById(id);
+            Drink drink =_drinkService.getById(id);
+
             if (drink != null){
-                return ResponseEntity.ok(drink);
+                drinkDto.setBody(drink);
+                return ResponseEntity.ok(drinkDto);
             }else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                drinkDto.setErrors(new Errors(204, "No se encontró Bar",null));
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(drinkDto);
             }
 
         }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            drinkDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(drinkDto);
         }
 
     }
 
     @PostMapping("/create")
-    public ResponseEntity<DrinkEntity> postDrink(@RequestBody RequestDrinkPostDto dates){
+    public ResponseEntity<ResponseDrinkDto> postDrink(@RequestBody RequestDrinkPostDto dates){
+
+        ResponseDrinkDto drinkDto = new ResponseDrinkDto();
 
         try{
-            DrinkEntity newDrink = _drinkService.createDrink(dates);
 
-            if (newDrink !=null){
-                return ResponseEntity.status(HttpStatus.CREATED).body(newDrink);
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            }
+            Drink newDrink = _drinkService.createDrink(dates);
+            drinkDto.setBody(newDrink);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(drinkDto);
+
         }catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            LOGGER.error(ex.getMessage());
+            drinkDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(drinkDto);
         }
 
     }
