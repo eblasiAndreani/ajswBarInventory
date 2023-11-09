@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class Table {
     private int id;
-    private String reference;
-    private String image;
-    private Byte dispose;
+    private boolean dispose;
     private Integer idBar;
+    private Integer chair;
 }

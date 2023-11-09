@@ -22,6 +22,17 @@ public class DrinkService implements IDrinkService {
     private IDrinkRepository _drinkRepository;
 
     @Override
+    public List<Drink> getByBar(Integer id) {
+        List<DrinkEntity> drinkEntityList = _drinkRepository.findByIdBar(id);
+        List<Drink> drinkList = new ArrayList<>();
+
+        for (DrinkEntity drinkEntity: drinkEntityList) {
+            drinkList.add(DrinkEntityToDrink(drinkEntity));
+        }
+        return drinkList;
+    }
+
+    @Override
     public List<Drink> getAll() {
         List<DrinkEntity> drinkEntityList = _drinkRepository.findAll();
         List<Drink> drinkList = new ArrayList<>();

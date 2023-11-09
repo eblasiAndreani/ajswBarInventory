@@ -9,4 +9,5 @@ public class Drink {
     private String description;
     private String image;
     private double price;
+    private int idBar;
 }

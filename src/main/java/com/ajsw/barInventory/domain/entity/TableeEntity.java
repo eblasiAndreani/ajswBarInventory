@@ -23,6 +23,9 @@ public class TableeEntity {
     @Basic
     @Column(name = "idBar")
     private Integer idBar;
+    @Basic
+    @Column(name = "chair")
+    private Integer chair;
 
     public int getId() {
         return id;
@@ -75,5 +78,13 @@ public class TableeEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, reference, image, dispose, idBar);
+    }
+
+    public Integer getChair() {
+        return chair;
+    }
+
+    public void setChair(Integer chair) {
+        this.chair = chair;
     }
 }

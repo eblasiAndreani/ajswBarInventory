@@ -26,7 +26,7 @@ public class TableController {
     private ITableService _tableService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<ResponseTablesDto> getAllPayment(){
+    public ResponseEntity<ResponseTablesDto> getAllTable(){
 
         ResponseTablesDto tablesDto = new ResponseTablesDto();
 
@@ -57,7 +57,7 @@ public class TableController {
                 return ResponseEntity.ok(responseTableDto);
             }else {
                 responseTableDto.setErrors(new Errors(204, "No se encontró table",null));
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(responseTableDto);
             }
 
         }catch (Exception ex) {
@@ -85,6 +85,26 @@ public class TableController {
             LOGGER.error(ex.getMessage());
             responseTableDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseTableDto);
+        }
+
+    }
+
+    @GetMapping("/getByBar/{id}")
+    public ResponseEntity<ResponseTablesDto> getAllTable(@PathVariable Integer id){
+
+        ResponseTablesDto tablesDto = new ResponseTablesDto();
+
+        try {
+
+            List<Table> tables = _tableService.getByIdBar(id);
+            tablesDto.setBody(tables);
+
+            return ResponseEntity.ok(tablesDto);
+
+        }catch (Exception ex) {
+            LOGGER.error(ex.getMessage());
+            tablesDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(tablesDto);
         }
 
     }

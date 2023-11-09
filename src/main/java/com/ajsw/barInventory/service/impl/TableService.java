@@ -39,6 +39,17 @@ public class TableService implements ITableService {
     }
 
     @Override
+    public List<Table> getByIdBar(int id) {
+        List<TableeEntity> tableEntities = _tableRepository.findByIdBar(id);
+        List<Table> tableList = new ArrayList<>();
+
+        for (TableeEntity tableEntity: tableEntities) {
+            tableList.add(TableEntityToTable(tableEntity));
+        }
+        return tableList;
+    }
+
+    @Override
     public Table createTable(RequestTablePostDto dates) {
 
         try{
@@ -62,11 +73,10 @@ public class TableService implements ITableService {
         if (dates != null){
 
             Table table = new Table();
-            table.setDispose(dates.getDispose());
-            table.setReference(dates.getReference());
-            table.setImage(dates.getImage());
+            table.setDispose( (dates.getDispose() == 1) );
             table.setIdBar(dates.getIdBar());
             table.setId(dates.getId());
+            table.setChair(dates.getChair());
 
             return table;
         }

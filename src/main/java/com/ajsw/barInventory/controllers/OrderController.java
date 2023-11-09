@@ -77,6 +77,5 @@ public class OrderController {
             orderDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(orderDto);
         }
-
     }
 }

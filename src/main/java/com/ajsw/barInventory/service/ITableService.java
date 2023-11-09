@@ -10,4 +10,5 @@ public interface ITableService {
     List<Table> getAll();
     Table createTable(RequestTablePostDto dates);
     Table getById(int id);
+    List<Table> getByIdBar(int id);
 }

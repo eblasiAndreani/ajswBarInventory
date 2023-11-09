@@ -23,6 +23,9 @@ public class DrinkEntity {
     @Basic
     @Column(name = "price")
     private double price;
+    @Basic
+    @Column(name = "idBar")
+    private int idBar;
 
     public int getId() {
         return id;
@@ -60,6 +63,10 @@ public class DrinkEntity {
         return price;
     }
 
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -75,5 +82,13 @@ public class DrinkEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description, image, price);
+    }
+
+    public int getIdBar() {
+        return idBar;
+    }
+
+    public void setIdBar(int idBar) {
+        this.idBar = idBar;
     }
 }

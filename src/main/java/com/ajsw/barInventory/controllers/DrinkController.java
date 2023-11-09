@@ -81,6 +81,22 @@ public class DrinkController {
             drinkDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(drinkDto);
         }
+    }
+    @GetMapping("/getByBar/{id}")
+    public ResponseEntity<ResponseDrinksDto> getByBar(@PathVariable Integer id){
+        ResponseDrinksDto drinksDto = new ResponseDrinksDto();
+        try{
+
+            List<Drink> drinks = _drinkService.getByBar(id);
+            drinksDto.setBody(drinks);
+
+            return ResponseEntity.ok(drinksDto);
+
+        }catch (Exception ex) {
+            LOGGER.error(ex.getMessage());
+            drinksDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(drinksDto);
+        }
 
     }
 }
