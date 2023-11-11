@@ -25,7 +25,7 @@ public class OrderController {
     private IOrderService _orderService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<ResponseOrdersDto> getAllPayment(){
+    public ResponseEntity<ResponseOrdersDto> getAllOrder(){
         ResponseOrdersDto ordersDto = new ResponseOrdersDto();
         try {
 
@@ -61,9 +61,8 @@ public class OrderController {
         }
 
     }
-
     @PostMapping("/create")
-    public ResponseEntity<ResponseOrderDto> postDrink(@RequestBody RequestOrderPostDto dates){
+    public ResponseEntity<ResponseOrderDto> postOrder(@RequestBody RequestOrderPostDto dates){
         ResponseOrderDto orderDto = new ResponseOrderDto();
         try{
 
@@ -76,6 +75,22 @@ public class OrderController {
             LOGGER.error(ex.getMessage());
             orderDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(orderDto);
+        }
+    }
+    @GetMapping("/getByUser/{id}")
+    public ResponseEntity<ResponseOrdersDto> GetOrderByUser(@PathVariable Integer id){
+
+        ResponseOrdersDto ordersDto = new ResponseOrdersDto();
+        try {
+
+            List<Order> orders = _orderService.getOrderByUsuario(id);
+            ordersDto.setBody(orders);
+            return ResponseEntity.ok(ordersDto);
+
+        }catch (Exception ex){
+            LOGGER.error(ex.getMessage());
+            ordersDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ordersDto);
         }
     }
 }

@@ -11,4 +11,5 @@ public interface ITableService {
     Table createTable(RequestTablePostDto dates);
     Table getById(int id);
     List<Table> getByIdBar(int id);
+    Boolean setDisposeTable(int id);
 }

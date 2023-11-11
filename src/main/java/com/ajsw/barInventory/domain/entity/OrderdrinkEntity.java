@@ -13,7 +13,7 @@ public class OrderdrinkEntity {
     private int id;
     @Basic
     @Column(name = "amount")
-    private Integer amount;
+    private Double amount;
     @Basic
     @Column(name = "idOrder")
     private Integer idOrder;
@@ -29,11 +29,11 @@ public class OrderdrinkEntity {
         this.id = id;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

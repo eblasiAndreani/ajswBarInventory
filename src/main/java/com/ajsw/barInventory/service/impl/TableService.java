@@ -48,7 +48,22 @@ public class TableService implements ITableService {
         }
         return tableList;
     }
+    @Override
+    public Boolean setDisposeTable(int id) {
+        try {
+            TableeEntity tableeEntity = _tableRepository.findById(id).orElse(null);
 
+            if (tableeEntity != null){
+                tableeEntity.setDispose(Byte.parseByte("0"));
+                _tableRepository.save(tableeEntity);
+                return true;
+            }
+            return false;
+
+        }catch (Exception e){
+            return false;
+        }
+    }
     @Override
     public Table createTable(RequestTablePostDto dates) {
 
@@ -69,12 +84,13 @@ public class TableService implements ITableService {
             throw ex;
         }
     }
+
     private Table TableEntityToTable(TableeEntity dates){
         if (dates != null){
 
             Table table = new Table();
             table.setDispose( (dates.getDispose() == 1) );
-            table.setIdBar(dates.getIdBar());
+            table.setBar(CallingService.FindBarById(String.valueOf(dates.getIdBar())));
             table.setId(dates.getId());
             table.setChair(dates.getChair());
 

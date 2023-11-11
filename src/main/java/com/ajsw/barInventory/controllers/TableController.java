@@ -108,4 +108,10 @@ public class TableController {
         }
 
     }
+
+    @PutMapping("/setDispose/{id}")
+    public ResponseEntity<Boolean> setDisposeTable(@PathVariable Integer id){
+
+        return ResponseEntity.ok(_tableService.setDisposeTable(id));
+    }
 }
