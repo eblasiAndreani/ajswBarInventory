@@ -17,7 +17,7 @@ public class OrderDinkService implements IOrderDrinkService {
     @Override
     public void CreateListOrderDrink(List<OrderDrinkDto> drinkDtoList, Integer idOrder){
         for (OrderDrinkDto x : drinkDtoList) {
-            createOrderDrink(idOrder, x.getDrink() , x.getPrice());
+            createOrderDrink(idOrder, x.getDrink() , x.getAmount());
         }
     }
     @Override

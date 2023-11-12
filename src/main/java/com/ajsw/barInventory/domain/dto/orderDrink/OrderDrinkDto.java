@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class OrderDrinkDto {
-    private double price;
+    private double amount;
     private int drink;
 }

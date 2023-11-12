@@ -7,7 +7,6 @@ import lombok.Data;
 public class Order {
     private int id;
     private Integer partialPrice;
-    private String observation;
     private Table idTable;
     private Integer idPayment;
     private Integer idUser;

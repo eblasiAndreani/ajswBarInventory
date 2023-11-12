@@ -15,9 +15,6 @@ public class OrderrEntity {
     @Column(name = "PartialPrice")
     private Integer partialPrice;
     @Basic
-    @Column(name = "observation")
-    private String observation;
-    @Basic
     @Column(name = "idTable")
     private Integer idTable;
     @Basic
@@ -41,14 +38,6 @@ public class OrderrEntity {
 
     public void setPartialPrice(Integer partialPrice) {
         this.partialPrice = partialPrice;
-    }
-
-    public String getObservation() {
-        return observation;
-    }
-
-    public void setObservation(String observation) {
-        this.observation = observation;
     }
 
     public Integer getIdTable() {
@@ -80,11 +69,11 @@ public class OrderrEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderrEntity that = (OrderrEntity) o;
-        return id == that.id && Objects.equals(partialPrice, that.partialPrice) && Objects.equals(observation, that.observation) && Objects.equals(idTable, that.idTable) && Objects.equals(idPayment, that.idPayment) && Objects.equals(idUsuario, that.idUsuario);
+        return id == that.id && Objects.equals(partialPrice, that.partialPrice) && Objects.equals(idTable, that.idTable) && Objects.equals(idPayment, that.idPayment) && Objects.equals(idUsuario, that.idUsuario);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, partialPrice, observation, idTable, idPayment, idUsuario);
+        return Objects.hash(id, partialPrice, idTable, idPayment, idUsuario);
     }
 }

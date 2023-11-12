@@ -1,9 +1,7 @@
 package com.ajsw.barInventory.service.impl;
 
-import com.ajsw.barInventory.domain.dto.order.Order;
 import com.ajsw.barInventory.domain.dto.table.RequestTablePostDto;
 import com.ajsw.barInventory.domain.dto.table.Table;
-import com.ajsw.barInventory.domain.entity.OrderrEntity;
 import com.ajsw.barInventory.domain.entity.TableeEntity;
 import com.ajsw.barInventory.repository.ITableRepository;
 import com.ajsw.barInventory.service.ITableService;
@@ -72,8 +70,6 @@ public class TableService implements ITableService {
 
 
             newTable.setDispose(dates.getDispose());
-            newTable.setReference(dates.getReference());
-            newTable.setImage(dates.getImage());
             newTable.setIdBar(dates.getIdBar());
             newTable.setChair(dates.getChair());
 

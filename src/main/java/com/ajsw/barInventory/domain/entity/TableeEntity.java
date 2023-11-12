@@ -12,12 +12,6 @@ public class TableeEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "reference")
-    private String reference;
-    @Basic
-    @Column(name = "image")
-    private String image;
-    @Basic
     @Column(name = "dispose")
     private Byte dispose;
     @Basic
@@ -25,7 +19,7 @@ public class TableeEntity {
     private Integer idBar;
     @Basic
     @Column(name = "chair")
-    private Integer chair;
+    private int chair;
 
     public int getId() {
         return id;
@@ -33,22 +27,6 @@ public class TableeEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public Byte getDispose() {
@@ -67,24 +45,24 @@ public class TableeEntity {
         this.idBar = idBar;
     }
 
+    public int getChair() {
+        return chair;
+    }
+
+    public void setChair(int chair) {
+        this.chair = chair;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TableeEntity that = (TableeEntity) o;
-        return id == that.id && Objects.equals(reference, that.reference) && Objects.equals(image, that.image) && Objects.equals(dispose, that.dispose) && Objects.equals(idBar, that.idBar);
+        return id == that.id && chair == that.chair && Objects.equals(dispose, that.dispose) && Objects.equals(idBar, that.idBar);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, reference, image, dispose, idBar);
-    }
-
-    public Integer getChair() {
-        return chair;
-    }
-
-    public void setChair(Integer chair) {
-        this.chair = chair;
+        return Objects.hash(id, dispose, idBar, chair);
     }
 }

@@ -1,10 +1,7 @@
 package com.ajsw.barInventory.service.impl;
 
-import com.ajsw.barInventory.domain.dto.drink.Drink;
 import com.ajsw.barInventory.domain.dto.order.Order;
 import com.ajsw.barInventory.domain.dto.order.RequestOrderPostDto;
-import com.ajsw.barInventory.domain.dto.orderDrink.OrderDrinkDto;
-import com.ajsw.barInventory.domain.entity.DrinkEntity;
 import com.ajsw.barInventory.domain.entity.OrderrEntity;
 import com.ajsw.barInventory.repository.IOrderRepository;
 import com.ajsw.barInventory.service.IOrderDrinkService;
@@ -66,7 +63,6 @@ public class OrderService implements IOrderService {
 
             order.setIdPayment(dates.getIdPayment());
             order.setIdTable(dates.getIdTable());
-            order.setObservation(dates.getObservation());
             order.setIdUsuario(dates.getIdUsurious());
             order.setPartialPrice(dates.getPartialPrice());
 
@@ -88,7 +84,6 @@ public class OrderService implements IOrderService {
             Order order = new Order();
             order.setIdPayment(dates.getIdPayment());
             order.setIdTable(_tableService.getById(dates.getIdTable()));
-            order.setObservation(dates.getObservation());
             order.setIdUser(dates.getIdUsuario());
             order.setPartialPrice(dates.getPartialPrice());
             order.setId(dates.getId());
