@@ -9,4 +9,5 @@ public class RequestDrinkPostDto {
     private String description;
     private String image;
     private double price;
+    private Integer idBar;
 }

@@ -70,10 +70,12 @@ public class TableService implements ITableService {
         try{
             TableeEntity newTable = new TableeEntity();
 
-            dates.setDispose(newTable.getDispose());
-            dates.setReference(newTable.getReference());
-            dates.setImage(newTable.getImage());
-            dates.setIdBar(dates.getIdBar());
+
+            newTable.setDispose(dates.getDispose());
+            newTable.setReference(dates.getReference());
+            newTable.setImage(dates.getImage());
+            newTable.setIdBar(dates.getIdBar());
+            newTable.setChair(dates.getChair());
 
             _tableRepository.save(newTable);
 

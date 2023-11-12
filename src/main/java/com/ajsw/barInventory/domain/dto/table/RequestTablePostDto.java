@@ -8,4 +8,5 @@ public class RequestTablePostDto {
     private String image;
     private Byte dispose;
     private Integer idBar;
+    private Integer chair;
 }

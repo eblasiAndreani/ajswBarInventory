@@ -60,6 +60,7 @@ public class DrinkService implements IDrinkService {
             drink.setImage(dates.getImage());
             drink.setName(dates.getName());
             drink.setPrice(dates.getPrice());
+            drink.setIdBar(dates.getIdBar());
 
             _drinkRepository.save(drink);
 
