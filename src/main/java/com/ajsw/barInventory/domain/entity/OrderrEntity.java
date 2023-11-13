@@ -13,7 +13,7 @@ public class OrderrEntity {
     private int id;
     @Basic
     @Column(name = "PartialPrice")
-    private Integer partialPrice;
+    private Double partialPrice;
     @Basic
     @Column(name = "idTable")
     private Integer idTable;
@@ -32,11 +32,11 @@ public class OrderrEntity {
         this.id = id;
     }
 
-    public Integer getPartialPrice() {
+    public Double getPartialPrice() {
         return partialPrice;
     }
 
-    public void setPartialPrice(Integer partialPrice) {
+    public void setPartialPrice(Double partialPrice) {
         this.partialPrice = partialPrice;
     }
 

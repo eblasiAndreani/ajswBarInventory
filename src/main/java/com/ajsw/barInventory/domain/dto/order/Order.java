@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class Order {
     private int id;
-    private Integer partialPrice;
+    private Double partialPrice;
     private Table idTable;
     private Integer idPayment;
     private Integer idUser;

@@ -7,9 +7,9 @@ import java.util.List;
 
 @Data
 public class RequestOrderPostDto {
-    private Integer partialPrice;
+    private Double partialPrice;
     private Integer idTable;
     private Integer idPayment;
-    private Integer idUsurious;
+    private Integer idUser;
     private List<OrderDrinkDto> drinks;
 }

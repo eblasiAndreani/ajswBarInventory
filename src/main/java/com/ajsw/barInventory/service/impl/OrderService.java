@@ -63,8 +63,9 @@ public class OrderService implements IOrderService {
 
             order.setIdPayment(dates.getIdPayment());
             order.setIdTable(dates.getIdTable());
-            order.setIdUsuario(dates.getIdUsurious());
+            order.setIdUsuario(dates.getIdUser());
             order.setPartialPrice(dates.getPartialPrice());
+            order.setIdUsuario(dates.getIdUser());
 
             _orderRepository.save(order);
 
