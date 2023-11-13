@@ -52,6 +52,7 @@ public class OrderService implements IOrderService {
         for (OrderrEntity drinkEntity: orderrEntityList) {
             orderList.add(OrderEntityToOrder(drinkEntity));
         }
+
         return orderList;
     }
 
@@ -88,7 +89,7 @@ public class OrderService implements IOrderService {
             order.setIdUser(dates.getIdUsuario());
             order.setPartialPrice(dates.getPartialPrice());
             order.setId(dates.getId());
-
+            order.setDrinks(_orderDrinkService.FindByOrder(dates.getId()));
             return order;
         }
         return  null;

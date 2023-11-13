@@ -1,7 +1,10 @@
 package com.ajsw.barInventory.domain.dto.order;
 
+import com.ajsw.barInventory.domain.dto.orderDrink.DrinkResponseDto;
 import com.ajsw.barInventory.domain.dto.table.Table;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class Order {
@@ -10,4 +13,5 @@ public class Order {
     private Table idTable;
     private Integer idPayment;
     private Integer idUser;
+    private List<DrinkResponseDto> drinks;
 }
