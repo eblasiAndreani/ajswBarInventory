@@ -10,6 +10,6 @@ public class RequestOrderPostDto {
     private Double partialPrice;
     private Integer idTable;
     private Integer idPayment;
-    private Integer idUser;
+    private String idUser;
     private List<OrderDrinkDto> drinks;
 }
