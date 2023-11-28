@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -56,16 +57,29 @@ public class OrderService implements IOrderService {
         return orderList;
     }
 
+    public List<Order> getOrderByTable(int id) {
+        List<OrderrEntity> orderrEntityList = _orderRepository.findByIdTable(id);
+        List<Order> orderList = new ArrayList<>();
+
+        for (OrderrEntity drinkEntity: orderrEntityList) {
+            orderList.add(OrderEntityToOrder(drinkEntity));
+        }
+
+        return orderList;
+    }
+
     @Override
     public Order createOrder(RequestOrderPostDto dates) {
 
         try{
             OrderrEntity order = new OrderrEntity();
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
             order.setIdPayment(dates.getIdPayment());
             order.setIdTable(dates.getIdTable());
             order.setIdUsuario(Integer.parseInt(dates.getIdUser()));
             order.setPartialPrice(dates.getPartialPrice());
+            order.setFechaAlta(timestamp);
 
             _orderRepository.save(order);
 
@@ -88,6 +102,7 @@ public class OrderService implements IOrderService {
             order.setIdUser(dates.getIdUsuario());
             order.setPartialPrice(dates.getPartialPrice());
             order.setId(dates.getId());
+            order.setFechaAlta(dates.getFechaAlta());
             order.setDrinks(_orderDrinkService.FindByOrder(dates.getId()));
             return order;
         }

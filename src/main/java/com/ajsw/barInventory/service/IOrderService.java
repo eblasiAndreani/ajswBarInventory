@@ -10,4 +10,9 @@ public interface IOrderService {
     Order createOrder(RequestOrderPostDto dates);
     Order getById(int id);
     List<Order> getOrderByUsuario(int id);
+
+    List<Order> getOrderByTable(int id);
+
+
+
 }

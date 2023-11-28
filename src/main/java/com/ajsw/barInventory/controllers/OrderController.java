@@ -91,4 +91,21 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ordersDto);
         }
     }
+
+    @GetMapping("/getByTable/{id}")
+    public ResponseEntity<ResponseOrdersDto> GetOrderByTable(@PathVariable Integer id){
+
+        ResponseOrdersDto ordersDto = new ResponseOrdersDto();
+        try {
+
+            List<Order> orders = _orderService.getOrderByTable(id);
+            ordersDto.setBody(orders);
+            return ResponseEntity.ok(ordersDto);
+
+        }catch (Exception ex){
+            LOGGER.error(ex.getMessage());
+            ordersDto.setErrors(new Errors(500, ex.getMessage(), Arrays.toString(ex.getStackTrace())));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ordersDto);
+        }
+    }
 }

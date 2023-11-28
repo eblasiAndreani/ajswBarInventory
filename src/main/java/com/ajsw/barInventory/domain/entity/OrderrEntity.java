@@ -2,6 +2,7 @@ package com.ajsw.barInventory.domain.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -12,8 +13,11 @@ public class OrderrEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "PartialPrice")
+    @Column(name = "partialPrice")
     private Double partialPrice;
+    @Basic
+    @Column(name = "fechaAlta")
+    private Timestamp fechaAlta;
     @Basic
     @Column(name = "idTable")
     private Integer idTable;
@@ -38,6 +42,13 @@ public class OrderrEntity {
 
     public void setPartialPrice(Double partialPrice) {
         this.partialPrice = partialPrice;
+    }
+    public Timestamp getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(Timestamp fechaAlta) {
+        this.fechaAlta = fechaAlta;
     }
 
     public Integer getIdTable() {
@@ -74,6 +85,6 @@ public class OrderrEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, partialPrice, idTable, idPayment, idUsuario);
+        return Objects.hash(id, partialPrice, fechaAlta, idTable, idPayment, idUsuario);
     }
 }
