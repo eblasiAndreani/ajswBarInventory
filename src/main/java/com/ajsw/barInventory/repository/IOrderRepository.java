@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IOrderRepository extends JpaRepository<OrderrEntity, Integer> {
     public List<OrderrEntity> findByIdUsuario(int idUsuario);
+    public List<OrderrEntity> findByIdTable(int idTable);
 }

@@ -52,7 +52,12 @@ public class TableService implements ITableService {
             TableeEntity tableeEntity = _tableRepository.findById(id).orElse(null);
 
             if (tableeEntity != null){
-                tableeEntity.setDispose(Byte.parseByte("0"));
+                if(tableeEntity.getDispose() == 1){
+                    tableeEntity.setDispose(Byte.parseByte("0"));
+                }else{
+                    tableeEntity.setDispose(Byte.parseByte("1"));
+                }
+
                 _tableRepository.save(tableeEntity);
                 return true;
             }
